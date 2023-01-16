@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HoneyHobby</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@700&family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+    <link href="../static/register.css" rel="stylesheet">
+    <style>
+
+        .nav {
+            width: 100%;
+            height: 100px;
+            background-color: black;
+        }
+
+        .register {
+            width: 100%;
+            height: 600px;
+            background-color: lightgoldenrodyellow;
+            position: absolute;
+        }
+
+        .resister-box {
+            width: 400px;
+            height: 500px;
+            background-color: white;
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+            border-radius: 5px;
+            margin: 0 auto;
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            position: relative;
+        }
+
+        .resister-box h1 {
+            text-align: center;
+            margin: 20px auto 50px auto;
+        }
+
+        .check-box{
+            display: flex;
+            flex-direction: row;
+            margin:0 auto;
+            margin-top:20px;
+        }
+
+
+
+        .button-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        .alert-box{
+            text-align: center;
+            margin-top: 10px;
+
+        }
+
+        .logo{
+        display: flex;
+        margin:0 auto;
+        margin-top:20px;
+
+    }
+
+    .logo h1{
+        color:yellow;
+        font-family: 'Dongle', sans-serif;
+        font-size: 50px;
+    }
+
+    #inputID{
+        margin-bottom:20px;
+    }
+    body{
+        background-color: lightgoldenrodyellow;
+        font-family: 'Gowun Dodum', sans-serif;
+        }
+
+
+    </style>
+
+    <script>
+        // $(document).ready(function () {
+        //     userList = [] // ID 중복을 위해 기존 이메일을 받아올 리스트
+        //     get_user();
+        // })
+        //
+        // function get_user() {
+        //
+        //     $.ajax({
+        //         type: 'GET', url: '/signin', data: {}, success: function (response) {
+        //             userList = response.users
+        //         }
+        //     })
+        // }
+
+        //회원가입 정보 저장, 유효성 검사
+        function save_account() {
+            let id = $('#inputID').val()
+            let password = $('#inputPW').val()
+            let pw_confirm = $('#pw_confirm').val()
+
+            if ([id, password, pw_confirm].includes('')) {
+                alert('빈칸을 채워주세요')
+                return;
+            }
+
+            //비밀번호 불일치 확인
+            if (password !== pw_confirm) {
+                alert('비밀번호가 일치하지 않습니다')
+                return;
+            }
+
+
+
+            // //id 중복 제어
+            // for (let i = 0; i < userList.length; i++) {
+            //     if (userList[i].id === id) {
+            //         alert('이미 가입된 아이디입니다')
+            //         return;
+            //     }
+            // }
+
+            $.ajax({
+                type: 'POST',
+                url: '/api/signup',
+                data: {id_give: id, password_give: password},
+                success: function (response) {
+                    alert(response['msg'])
+                    window.location.href = '/'
+                }
+            })
+
+        }
+
+    </script>
+</head>
+<body>
+<section class="nav">
+    <div class="logo">
+        <h1>HoneyHobby</h1>
+    </div>
+</section>
+<section class="register">
+    <div class="resister-box">
+        <h1>회원가입</h1>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="inputID" placeholder="name@example.com">
+            <label for="floatingInput">ID</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="inputPW" placeholder="Password">
+            <label for="floatingPassword">Password</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="pw_confirm" placeholder="Password">
+            <label for="floatingPassword">비밀번호 확인</label>
+        </div>
+
+        <div class="button-box">
+            <button type="button" class="btn btn-warning" onclick="save_account()">회원가입</button>
+        </div>
+    </div>
+</section>
+<section></section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<!--<script src="../static/register.js"></script>-->
+</body>
+</html>

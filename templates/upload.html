@@ -11,8 +11,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@700&family=Gowun+Dodum&display=swap" rel="stylesheet">
 
-    <title>스파르타코딩클럽 | 부트스트랩 연습하기</title>
+    <title>HoneyHobby</title>
     <style>
         .mytitle {
             width: 100%;
@@ -21,63 +22,117 @@
             background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
             background-position: center;
             background-size: cover;
-
-            color: white;
-
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            background-color: black;
         }
 
-        .mypost {
+        .mytitle h1{
+          font-size: 60px;
+            font-family: 'Dongle', sans-serif;
+            color: yellow;
+        }
+
+        .myhobbyEnter {
             width: 95%;
             max-width: 500px;
             margin: 20px auto 0px auto;
             padding: 20px;
             box-shadow: 0px 0px 3px 0px gray;
+            font-family: 'Gowun Dodum', sans-serif;
 
         }
 
-        .card {
-            width: 95%;
-            max-width: 500px;
-            margin: 20px auto 0px auto;
-            padding: 20px;
-            box-shadow: 0px 0px 3px 0px gray;
+        .mybtns{
+          display: flex;
+          justify-content: center;
+          font-family: 'Gowun Dodum', sans-serif;
+        }
+
+         #post-box{
+          background-color: lightgoldenrodyellow;
+          box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+          border-radius: 5px;
+          font-family: 'Gowun Dodum', sans-serif;
+        }
+
+        body{
+          background-color: black;
+        }
+
+        .title h1{
+          text-align: center;
+          margin:10px auto 20px auto;
+            font-family: 'Gowun Dodum', sans-serif;
+            font-weight:600;
+        }
+
+        p{
+          color:lightgoldenrodyellow;
+          text-align: center;
+            font-family: 'Gowun Dodum', sans-serif;
         }
     </style>
     <script>
+        function save_hobby() {
+            let title = $('#title').val()
+            let url = $('#url').val()
+            let contents = $('#contents').val()
+            $.ajax({
+                type: "POST",
+                url: "/upload",
+                data: {title_give: title, url_give: url, contents_give: contents},
+                success: function (response) {
+                    alert(response["msg"])
+                    window.location.reload()
+                }
+            });
+        }
+        function connecting() {
+            window.location.href = "/main"
+        }
     </script>
 </head>
 
 <body>
 <div class="mytitle">
-    <h1>취미 등록</h1>
+    <h1>honeyhobby</h1>
 </div>
-<div class="mypost" id="post-box">
-    <div class="form-floating mb-3">
-        <input id="name" type="text" class="form-control" placeholder="이름">
-        <label>이름</label>
+
+<form action="/main" method="post">
+    <div class="myhobbyEnter" id="post-box">
+        <div class="title">
+            <h1>취미 등록</h1>
+        </div>
+        <div class="form-floating mb-3">
+            <input name="title" type="text" class="form-control" placeholder="취미명">
+            <label>취미명</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input name="url" type="text" class="form-control" placeholder="url">
+            <label>URL</label>
+        </div>
+        <!--    <div class="form-floating mb-3">-->
+        <!--        <input id="recruitCount" type="text" class="form-control" placeholder="인원수">-->
+        <!--        <label>원하는 인원수</label>-->
+        <!--    </div>-->
+        <div class="form-floating mb-3">
+            <input name="contents" type="text" class="form-control" placeholder="기타 설명">
+            <label>기타 설명(장소, 소개 등)</label>
+        </div>
+        <!--    <img src="..." class="rounded float-start" alt="...">-->
+        <div class="form-floating mb-3">
+        <input name="file" type="text" class="form-control" placeholder="file">
+        <label>사진 첨부</label>
+        </div>
+        <div class="mybtns">
+            <!--        <button type="button" class="btn btn-dark" style="margin-top: 20px" onclick="save_hobby()">기록하기</button>-->
+            <button type="submit" class="btn btn-warning" style="margin-top: 20px">기록하기</button>
+        </div>
     </div>
-    <div class="form-floating mb-3">
-        <input id="url" type="text" class="form-control" placeholder="url">
-        <label>URL</label>
-    </div>
-    <div class="form-floating mb-3">
-        <input id="recruitCount" type="text" class="form-control" placeholder="인원수">
-        <label>원하는 인원수</label>
-    </div>
-    <div class="form-floating mb-3">
-        <input id="comment" type="text" class="form-control" placeholder="기타 설명">
-        <label>기타 설명(장소, 소개 등)</label>
-    </div>
-    <img src="..." class="rounded float-start" alt="...">
-    <img src="..." class="rounded float-end" alt="...">
-    <div class="mybtns">
-        <button type="button" class="btn btn-dark" style="margin-top: 20px">기록하기</button>
-    </div>
-</div>
+</form>
 </body>
 
 </html>
